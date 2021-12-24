@@ -1,0 +1,1 @@
+The ``/routes/student.py`` script will contain all the API routes that complement the ``/server/database.py`` CRUD operations. 
