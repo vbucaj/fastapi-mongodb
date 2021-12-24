@@ -45,3 +45,5 @@ async def retreive_single_student(id: str):
         return ResponseModel(student, f'Student with id {id} retreived successfully')
     return ErrorResponseModel('An Error Occured!',404, f'There is no student with id {id} in the database')
 
+#route to update student data
+@router.put("/{id}")
