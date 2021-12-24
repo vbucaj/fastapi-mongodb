@@ -46,4 +46,30 @@ async def retreive_single_student(id: str):
     return ErrorResponseModel('An Error Occured!',404, f'There is no student with id {id} in the database')
 
 #route to update student data
-@router.put("/{id}")
+@router.put("/{id}", response_description="Student data updated successfully")
+async def update_student_data(id: str, req: UpdateStudentModel = Body(...)):
+    req = {k:v for k, v in req.dict().items() if v is not None}
+    updated_student = await update_student(id, req)
+    if update_student:
+        return ResponseModel(
+            updated_student, 
+            f'Student with id {id} was successfully updated'
+            )
+    return ErrorResponseModel(
+        'Error!',
+        404,
+        'An error occurred trying to update the student data'
+    )
+
+#route to delete student data
+@router.delete("/{id}", response_description="Student data deleted from the database")
+async def delete_student_data(id: str):
+    deleted_student = await delete_student(id)
+    if deleted_student:
+        return ResponseModel(
+            "Student with ID: {} removed".format(id), "Student deleted successfully"
+        )
+    return ErrorResponseModel(
+        "An error occurred", 404, "Student with id {0} doesn't exist".format(id)
+    )
+
